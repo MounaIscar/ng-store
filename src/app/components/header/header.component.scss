@@ -1,0 +1,17 @@
+.header {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -1,0 +1,13 @@
+.home {
+  &__banner {
+    width: 100%;
+    height: 350px; //25vh
+    background: url("/assets/petshopImg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    @media screen and (max-width: 1366px) {
+      background-size: 100%;
+    }
+  }
+}
