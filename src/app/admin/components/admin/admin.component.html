@@ -1,1 +1,59 @@
-<p>admin works!</p>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+</mat-form-field>
+<br /><br /><br /><br />
+<table
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+  matSort
+  (matSortChange)="sortData($event)"
+>
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="sort by {column}"
+      matSortDirection="asc"
+    >
+      {{ column }}
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let row"
+      matTooltip="{{ row[column] }}"
+      matTooltipHideDelay="10"
+    >
+      {{ row[column] }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="star" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon>more_vert</mat-icon>
+    </td>
+  </ng-container>
+  <!-- <ng-container matColumnDef="image">
+    <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+    <td mat-cell *matCellDef="let element">
+      <img [src]="{{ row[column] }}" />
+    </td>
+  </ng-container> -->
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<br /><br />
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+  aria-label="mmmmmm"
+>
+</mat-paginator>

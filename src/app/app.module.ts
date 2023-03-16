@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MaterialModule } from './material/material.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AdminComponent } from './admin/components/admin/admin.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -19,6 +19,7 @@ import { AdminComponent } from './admin/components/admin/admin.component';
     MaterialModule,
     HomeModule,
     HttpClientModule,
+    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
