@@ -4,9 +4,8 @@ export interface IProduct {
   price: number;
   description: string;
   category: string;
-  thumbnail: string;
-  brand: string;
-  //rating: IRating;
+  image: string;
+  rating: IRating;
 }
 
 export interface IRating {

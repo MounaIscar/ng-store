@@ -4,6 +4,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductService } from 'src/app/product/services/product.service';
 import { IProduct } from 'src/app/shared/models';
+import { EditProductComponent } from '../edit-product/edit-product.component';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin',
@@ -11,19 +17,34 @@ import { IProduct } from 'src/app/shared/models';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent {
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    public dialog: MatDialog
+  ) {}
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
   public displayedColumns: Array<string> = [];
   public dataSource: MatTableDataSource<IProduct> = new MatTableDataSource();
+  public products: IProduct[] = [];
 
   ngOnInit() {
-    this.productService.getProducts$().subscribe((data) => {
-      this.initTable(data);
-      this.initFilterAndPagination();
-    });
+    // this.productService.getProducts$().subscribe((data) => {
+    //   this.initTable(data);
+    //   this.initFilterAndPagination();
+    // });
+
+    this.productService
+      .getProducts$()
+      .pipe()
+      .subscribe((data) => {
+        console.log('all products', data);
+        this.initTable(data);
+        this.initFilterAndPagination();
+      });
+
+    this.productService.fetchProducts();
   }
 
   public applyFilter(event: Event): void {
@@ -51,5 +72,14 @@ export class AdminComponent {
 
   ngAfterViewInit() {
     this.initFilterAndPagination();
+  }
+
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(EditProductComponent, {
+      data: {
+        id: id,
+      },
+      width: '450px',
+    });
   }
 }
