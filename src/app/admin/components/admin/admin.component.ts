@@ -1,13 +1,6 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductService } from 'src/app/product/services/product.service';
 import { IProduct } from 'src/app/shared/models';
@@ -17,46 +10,46 @@ import { IProduct } from 'src/app/shared/models';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
-  displayedColumns: string[] = [];
+export class AdminComponent {
+  constructor(private productService: ProductService) {}
 
-  public dataSource = new MatTableDataSource<IProduct>();
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  private _liveAnnouncer?: LiveAnnouncer;
 
-  constructor(private ProductService: ProductService) {}
+  public displayedColumns: Array<string> = [];
+  public dataSource: MatTableDataSource<IProduct> = new MatTableDataSource();
+
   ngOnInit() {
-    this.ProductService.getProducts$().subscribe((data) => {
-      this.displayedColumns = Object.keys(data[0]);
-      this.dataSource = new MatTableDataSource(data);
-      if (this.paginator) this.dataSource.paginator = this.paginator;
-      if (this.sort) this.dataSource.sort = this.sort;
+    this.productService.getProducts$().subscribe((data) => {
+      this.initTable(data);
+      this.initFilterAndPagination();
     });
   }
 
-  applyFilter(event: Event) {
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  private initTable(data: IProduct[]): void {
+    console.log('all products', data);
+    this.displayedColumns = Object.keys(data[0]);
+    this.displayedColumns.push('edit');
+    this.dataSource = new MatTableDataSource(data);
+  }
+
+  initFilterAndPagination() {
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   ngAfterViewInit() {
-    if (this.paginator) this.dataSource.paginator = this.paginator;
-    if (this.sort) this.dataSource.sort = this.sort;
+    this.initFilterAndPagination();
   }
-
-  sortData(event: Event) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    // if (this.sort.direction) {
-    //   if (this._liveAnnouncer)
-    //     this._liveAnnouncer.announce(`Sorted ${this.sort.direction}ending`);
-    // } else {
-    //   if (this._liveAnnouncer) this._liveAnnouncer.announce('Sorting cleared');
-    // }
-  }
-
-  ngOnDestroy() {}
 }

@@ -1,26 +1,26 @@
 .home {
   &__banner {
     width: 100%;
-    height: 350px; //25vh
-    background: url("/assets/petshopImg.jpg");
+    height: 350px;
+    background: url("/assets/banner.jfif");
     background-size: cover;
     background-repeat: no-repeat;
 
-    @media screen and (max-width: 1366px) {
+    @media screen and (max-width: 900px) {
       background-size: contain;
       background-repeat: no-repeat;
     }
   }
 
   &__products {
-    width: 100%;
     display: flex;
+    justify-content: space-between;
+    width: 100%;
     flex-wrap: wrap;
+    gap: 30px;
   }
+
   &__product {
-    margin: 100px auto 0;
-    width: 25%;
-    display: inline-block;
-    align-items: center;
+    width: 30%;
   }
 }

@@ -1,5 +1,5 @@
 export const Routes: { [key: string]: any } = {
-  allProducts: 'https://fakestoreapi.com/products',
+  allProducts: 'https://dummyjson.com/docs/products',
   singleProduct: (productId: string) =>
-    `https://fakestoreapi.com/products/${productId}`,
+    `https://dummyjson.com/docs/products/${productId}`,
 };

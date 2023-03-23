@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/product/services/product.service';
 import { IProduct } from 'src/app/shared/models';
 
@@ -10,13 +10,19 @@ import { IProduct } from 'src/app/shared/models';
 export class HomeComponent implements OnInit, OnDestroy {
   public products: IProduct[] = [];
 
-  constructor(private ProductService: ProductService) {}
+  constructor(private productService: ProductService) {}
+
   ngOnInit() {
-    this.ProductService.getProducts$().subscribe((data) => {
-      //returns observable , subscribe מאזינה לאובזירבבלי
+    this.productService.getProducts$().subscribe((data) => {
+      console.log('all products', data);
       this.products = data;
-      console.log(data);
     });
   }
-  ngOnDestroy() {}
+
+  ngOnDestroy(): void {}
+
+  /*
+  1. add input to app-card component
+  2. inside app card display all product fields
+  */
 }

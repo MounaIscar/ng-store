@@ -1,0 +1,25 @@
+<div class="sidebar" [ngClass]="{ 'sidebar--open': isOpen }">
+  <div class="sidebar__inner">
+    <a
+      routerLink=""
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      (click)="closeSidebar()"
+      >Home</a
+    >
+    <a
+      routerLink="/admin"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      (click)="closeSidebar()"
+      >Admin</a
+    >
+  </div>
+</div>
+<div
+  class="backdrop"
+  (click)="closeSidebar()"
+  [ngClass]="{ 'backdrop--open': isOpen }"
+>
+  backdrop
+</div>
