@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, Routes } from '@angular/router';
 import { AdminComponent } from 'src/app/admin/components/admin/admin.component';
 import { HomeComponent } from 'src/app/home/components/home/home.component';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +19,7 @@ export class SidebarComponent {
     { path: '', component: HomeComponent },
   ];
 
-  //   constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, public dialog: MatDialog) {}
 
   // go() {
   //   this.router.navigate(['home'], { relativeTo: this.route });
@@ -31,5 +33,13 @@ export class SidebarComponent {
 
   public closeSidebar(): void {
     this.onCloseSidebar.emit();
+  }
+
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '450px',
+      height: '500px',
+    });
+    this.closeSidebar();
   }
 }

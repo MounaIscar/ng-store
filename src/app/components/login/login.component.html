@@ -1,0 +1,49 @@
+<div class="login">
+  <form #loginForm="ngForm" (submit)="onSubmit(loginForm)">
+    <div class="login__field">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          matInput
+          ngModel
+          placeholder="Ex.pat@example.com"
+        />
+        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+        <mat-error> Please enter a valid email address </mat-error>
+        <mat-error> </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          ngModel
+          id="password"
+          name="password"
+          [type]="hide ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Select a user role</mat-label>
+        <mat-select disableRipple id="selectRole" name="selectRole" ngModel>
+          <mat-option value="user" ngModel>User</mat-option>
+          <mat-option value="admin" ngModel>Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="login__actions">
+      <button type="submit" mat-raised-button color="accent">Login</button>
+    </div>
+  </form>
+</div>
